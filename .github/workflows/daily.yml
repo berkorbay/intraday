@@ -19,7 +19,7 @@ jobs:
       - name: Run intraday
         run: |
           ls -la
-          python intraday.pyc
+          python intraday.pyc --rootkey ${{ secrets.ROOT_KEY }}
       - name: GitHub Push
         uses: ad-m/github-push-action@v0.6.0
         with:
