@@ -15,7 +15,7 @@ jobs:
       - name: Create local changes
         run: python -m pip install --upgrade pip
           pip install pandas argparse
-          python /Users/bo/git_repositories/intraday/intraday.py
+          python intraday.py
       - name: GitHub Push
         uses: ad-m/github-push-action@v0.6.0
         with:
