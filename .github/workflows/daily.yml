@@ -21,7 +21,8 @@ jobs:
           ls -la
           python intraday.pyc --rootkey ${{ secrets.ROOT_KEY }}
       - name: GitHub Push
-        uses: ad-m/github-push-action@v0.6.0
+        uses: actions-js/push@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          message: "Daily update"
+          branch: "main"
