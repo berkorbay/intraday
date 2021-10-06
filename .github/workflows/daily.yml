@@ -41,7 +41,9 @@ jobs:
         uses: r-lib/actions/setup-r@v1
       - uses: r-lib/actions/setup-pandoc@v1
       - name: Install rmarkdown
-        run: Rscript -e 'install.packages("rmarkdown")'
+        run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
+      - name: Install intraday
+        run: Rscript -e 'devtools::install(".",upgrade='never')'
       - name: Render README
         run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
       - name: GitHub Push
