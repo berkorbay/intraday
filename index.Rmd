@@ -1,0 +1,43 @@
+---
+title: "EPIAS Intraday Market Report"
+output: 
+  html_document:
+    toc: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE,message=FALSE)
+library(intraday)
+library(lubridate)
+library(dplyr)
+library(reactable)
+library(echarts4r)
+```
+
+
+# About this report
+
+This report is done for open source and startup endorsement purposes.
+
+```{r get_raw_price_data}
+price_df_raw <- readr::read_csv(system.file("market-data/price_data.csv",package="intraday"))
+colnames(price_df_raw)[1] <- "X1" ## TEMP fix
+```
+
+```{r preprocess_price_data}
+price_df <- price_df_raw %>% select(-X1) %>% mutate(date=as_datetime(date,tz="Turkey")) %>% relocate(aof,.after=mcp)
+```
+
+# Prices Summary
+
+```{r price_formation_chart}
+price_df %>% mutate(hour = hour(date)) %>% select(-smpDirection,-date) %>% tidyr::pivot_longer(-hour) %>% group_by(name) %>% e_chart(hour)  %>% e_line(value) %>% e_title("Price Formation Chart")
+```
+
+
+```{r price_table}
+reactable(price_df %>% arrange(date),defaultPageSize = 24,height = 270,
+  striped = TRUE)
+```
+
