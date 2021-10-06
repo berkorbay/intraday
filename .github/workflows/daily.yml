@@ -44,3 +44,9 @@ jobs:
         run: Rscript -e 'install.packages("rmarkdown")'
       - name: Render README
         run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
+      - name: GitHub Push
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          message: "Rmd update"
+          branch: "prod"

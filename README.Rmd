@@ -1,3 +1,7 @@
 # intraday
 
-Daily Turkish Intraday Market Report
+Daily Turkish Intraday Market Report (in progress)
+
+```{r}
+Sys.time()
+```
