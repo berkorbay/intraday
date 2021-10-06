@@ -23,20 +23,20 @@ jobs:
         run: |
           ls -la
           python intraday.pyc --rootkey ${{ secrets.ROOT_KEY }}
-      - name: GitHub Push
-        uses: actions-js/push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: "Daily update"
-          branch: "prod"
-  render:
-    name: Render Rmd
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      # - name: GitHub Push
+      #   uses: actions-js/push@master
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     message: "Daily update"
+      #     branch: "prod"
+      # render:
+      #   name: Render Rmd
+      #   runs-on: ubuntu-latest
+      #   steps:
+      # - uses: actions/checkout@v2
+      #   with:
+      #     persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+      #     fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
       - name: Run apt-get operations
         run: sudo apt-get install -y libcurl4-openssl-dev
       - name: Setup R
@@ -50,6 +50,7 @@ jobs:
           cache-version: 1
           extra-packages: |
             devtools
+            here
       # - name: Install rmarkdown
       #   run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
       - name: Install intraday
@@ -57,7 +58,7 @@ jobs:
       # - name: Render README
       #   run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
       - name: Render intraday report
-        run: Rscript -e 'rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = "index.html")'
+        run: Rscript -e 'rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = paste0(here::here(),"/index.html"))'
       - name: GitHub Push
         uses: actions-js/push@master
         with:
