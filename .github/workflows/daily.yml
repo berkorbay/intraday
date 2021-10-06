@@ -47,12 +47,13 @@ jobs:
       - name: Install deps
         uses: r-lib/actions/setup-r-dependencies@v1
         with:
+          cache-version: 1
           extra-packages: |
             devtools
       # - name: Install rmarkdown
       #   run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
       - name: Install intraday
-        run: Rscript -e 'devtools::install(".",upgrade='never')'
+        run: Rscript -e 'devtools::install(".",upgrade="never")'
       - name: Render README
         run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
       - name: GitHub Push
