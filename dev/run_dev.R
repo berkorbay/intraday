@@ -10,5 +10,7 @@ golem::document_and_reload()
 
 devtools::install(".",upgrade="never")
 
+rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = "~/Documents/intraday_report.html")
+
 # Run the application
 run_app()

@@ -10,11 +10,15 @@ output:
 knitr::opts_chunk$set(echo = FALSE,warning=FALSE,message=FALSE)
 library(intraday)
 library(lubridate)
-library(tidyverse)
+library(dplyr)
 library(reactable)
 library(echarts4r)
 ```
 
+
+# About this report
+
+This report is done for open source and startup endorsement purposes.
 
 ```{r}
 price_df_raw <- readr::read_csv(system.file("market-data/price_data.csv",package="intraday"))
@@ -26,7 +30,7 @@ price_df = price_df_raw %>% select(-X1) %>% mutate(date=as_datetime(date,tz="Tur
 # Prices Summary
 
 ```{r}
-price_df %>% mutate(hour = hour(date)) %>% select(-smpDirection,-date) %>% pivot_longer(-hour) %>% group_by(name) %>% e_chart(hour)  %>% e_line(value) %>% e_title("Price Formation Chart")
+price_df %>% mutate(hour = hour(date)) %>% select(-smpDirection,-date) %>% tidyr::pivot_longer(-hour) %>% group_by(name) %>% e_chart(hour)  %>% e_line(value) %>% e_title("Price Formation Chart")
 ```
 
 

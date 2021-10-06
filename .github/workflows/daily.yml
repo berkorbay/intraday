@@ -37,13 +37,21 @@ jobs:
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - name: Run apt-get operations
+        run: libcurl4-openssl-dev
       - name: Setup R
         uses: r-lib/actions/setup-r@v1
         with:
           r-version: "4.1.0"
       - uses: r-lib/actions/setup-pandoc@v1
-      - name: Install rmarkdown
-        run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
+      - name: Install deps
+        uses: r-lib/actions/setup-r-dependencies@v1
+        with:
+          extra-packages: |
+            rmarkdown
+            devtools
+      # - name: Install rmarkdown
+      #   run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
       - name: Install intraday
         run: Rscript -e 'devtools::install(".",upgrade='never')'
       - name: Render README

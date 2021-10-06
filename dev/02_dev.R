@@ -19,7 +19,9 @@ usethis::use_package("thinkr")
 
 usethis::use_package("readr",type="Imports")
 usethis::use_package("dplyr",type="Depends")
-usethis::use_package("dplyr",type="Depends")
+usethis::use_package("reactable")
+usethis::use_package("echarts4r")
+usethis::use_package("rmarkdown")
 
 ## Add modules ----
 ## Create a module infrastructure in R/
