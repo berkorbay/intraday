@@ -22,6 +22,7 @@ usethis::use_package("dplyr",type="Depends")
 usethis::use_package("reactable")
 usethis::use_package("echarts4r")
 usethis::use_package("rmarkdown")
+usethis::use_package("lubridate",type="Depends")
 
 ## Add modules ----
 ## Create a module infrastructure in R/

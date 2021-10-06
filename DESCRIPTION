@@ -19,4 +19,5 @@ RoxygenNote: 7.1.1
 URL: https://github.com/berkorbay/intraday
 BugReports: https://github.com/berkorbay/intraday/issues
 Depends: 
-    dplyr
+    dplyr,
+    lubridate

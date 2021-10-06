@@ -54,8 +54,8 @@ jobs:
       #   run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
       - name: Install intraday
         run: Rscript -e 'devtools::install(".",upgrade="never")'
-      - name: Render README
-        run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
+      # - name: Render README
+      #   run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
       - name: Render intraday report
         run: Rscript -e 'rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = "index.html")'
       - name: GitHub Push
