@@ -28,7 +28,7 @@ jobs:
   #       with:
   #         github_token: ${{ secrets.GITHUB_TOKEN }}
   #         message: "Daily update"
-  #         branch: "main"
+  #         branch: "prod"
   render:
     name: Render Rmd
     runs-on: ubuntu-latest
