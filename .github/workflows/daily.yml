@@ -48,7 +48,6 @@ jobs:
         uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: |
-            rmarkdown
             devtools
       # - name: Install rmarkdown
       #   run: Rscript -e 'install.packages(c("rmarkdown","devtools"))'
