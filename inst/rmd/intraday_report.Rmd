@@ -20,21 +20,23 @@ library(echarts4r)
 
 This report is done for open source and startup endorsement purposes.
 
-```{r}
+```{r get_raw_price_data}
 price_df_raw <- readr::read_csv(system.file("market-data/price_data.csv",package="intraday"))
+colnames(price_df_raw)[1] <- "X1" ## TEMP fix
 ```
-```{r}
-price_df = price_df_raw %>% select(-X1) %>% mutate(date=as_datetime(date,tz="Turkey")) %>% relocate(aof,.after=mcp)
+
+```{r preprocess_price_data}
+price_df <- price_df_raw %>% select(-X1) %>% mutate(date=as_datetime(date,tz="Turkey")) %>% relocate(aof,.after=mcp)
 ```
 
 # Prices Summary
 
-```{r}
+```{r price_formation_chart}
 price_df %>% mutate(hour = hour(date)) %>% select(-smpDirection,-date) %>% tidyr::pivot_longer(-hour) %>% group_by(name) %>% e_chart(hour)  %>% e_line(value) %>% e_title("Price Formation Chart")
 ```
 
 
-```{r}
+```{r price_table}
 reactable(price_df %>% arrange(date),defaultPageSize = 24,height = 270,
   striped = TRUE)
 ```
