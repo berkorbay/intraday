@@ -47,7 +47,7 @@ title: "EPIAS Intraday Market Report of `r format(the_date,format="%b %d, %Y")` 
 valuebox_vec <-  price_df %>% mutate(pd_aof_mcp = aof-mcp,pd_aof_smp = aof-smp) %>% summarise(md_mcp=round(mean(pd_aof_mcp,na.rm=TRUE),2),md_smp=round(mean(pd_aof_smp,na.rm=TRUE),2)) %>% unlist()
 
 header_df <- 
-tibble(name= "Total Intraday Market Volume (TIMV)" ,value=summary_df_raw %>% summarise(timv=round(sum(tradingVolume,na.rm=TRUE))) %>% unlist() %>% paste0("TRY ",format(.,big.mark=",",small.mark="."))) %>%
+tibble(name= "Total Intraday Market Volume (TIMV)" ,value=summary_df_raw %>% summarise(timv=format(round(sum(tradingVolume,na.rm=TRUE)),big.mark=",",small.mark=".")) %>% unlist() %>% paste0("TRY ",.)) %>%
   add_row(name="Mean Deviation from MCP",value=paste0("TRY ",valuebox_vec["md_mcp"])) %>%
   add_row(name="Mean Deviation from SMP",value=paste0("TRY ",valuebox_vec["md_smp"])) 
 

@@ -1,7 +1,7 @@
 name: Daily Routine
 on:
   schedule:
-    - cron: 15 10 * * *
+    - cron: 0 5 * * *
   # push:
   #   branches:
   #     - "prod"
