@@ -36,7 +36,7 @@ the_date <- as_date(names(table(as_date(price_df_raw$date)))[1])
 
 
 ---
-title: "EPIAS Intraday Market Report of `r format(the_date,format="%b %d, %Y")`"
+title: "EPIAS Intraday Market Report of `r format(the_date,format="%b %d, %Y")` (BETA)"
 ---
 
 <!-- <h1>Report of `r format(the_date,format="%b %d, %Y")`</h1> -->
@@ -55,17 +55,16 @@ reactable(header_df,striped = TRUE)
 ```
 
 
-
 <div class="alert alert-warning role="alert" style="width:99%; height:100%;"> 
 <h2> Today's startup! </h2>
-<p>Project Intraday has a mission to promote a startup or organization each day. You can <a href="https://www.linkedin.com/in/berkorbay/" target="_blank">contact me on Linkedin</a> if you want to be featured.</p>
+<p>Project Intraday has an objective to promote a startup or organization each day. You can <a href="https://www.linkedin.com/in/berkorbay/" target="_blank">contact me on Linkedin</a> if you want to be featured.</p>
 
 <p> <strong>Açık Enerji</strong> (Open Energy) is a Github organization of repositories and external links about data analysis in energy sector. Repositories and links also contain code and data as well as the analyses.</p>
 
 <p><a href="https://github.com/acikenerji" target="_blank">Click here to learn more</a></p>
 </div>
 
-<h2>Daily Chart and Data</h2>
+## Daily Chart and Data
 
 ```{r price_formation_chart}
 price_df %>% mutate(hour = hour(date)) %>% select(-smpDirection,-date) %>% rename(MCP=mcp,WAP=aof,SMP=smp) %>% tidyr::pivot_longer(-hour) %>% group_by(name) %>% e_chart(hour)  %>% e_line(value) %>% e_title("Price Chart") %>% e_tooltip(trigger = "axis") # tooltip
@@ -78,16 +77,23 @@ reactable(price_table_df,defaultPageSize = 24,height = 350,
   striped = TRUE)
 ```
 
+## Contract Distribution
+
+```{r}
+tx_df %>% group_by(contract) %>% summarise(total_mwh = sum(quantity_in_mwh*pmax(1,block_hours))) %>% ungroup() %>% arrange(desc(total_mwh)) %>% slice(1:20) %>% arrange(total_mwh) %>% e_chart(contract,reorder = FALSE) %>% e_bar(total_mwh,reorder = FALSE) %>%  e_legend(FALSE) %>% e_title("Top 20 Contracts by Total Volume in MWh")  %>%  e_y_axis(splitLine = list(show = FALSE), axisLabel = list(
+    interval = 0L
+  )) %>% e_flip_coords() %>% e_x_axis(show = FALSE) %>% e_labels(position = "right")
+
+```
+
 
 # About the report
 
-- This is a free report and authors do not admit any responsibility the report or the data.
+- This is a free report and authors do not admit any responsibility about the report or the data.
 - This report is meant to refresh itself each day automatically. Essentially an R package, an external python script and Github Actions make it possible. Blog post to follow soon...
 - Data is taken from [EPIAS Seffaflik Platformu](https://seffaflik.epias.com.tr/), data provider of the Turkish Energy Exchange.
 - Almost all code is openly shared on its [Github repository](https://github.com/berkorbay/intraday). You may use the code in line with the license (MIT license).
-
-
-
+- For improvement, analysis and data requests [contact me on Linkedin](https://www.linkedin.com/in/berkorbay/). For raw data csv files [click here](https://github.com/berkorbay/intraday/tree/prod/inst/market-data).
 
 
 
