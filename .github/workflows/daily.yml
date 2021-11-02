@@ -57,10 +57,10 @@ jobs:
         run: Rscript -e 'devtools::install(".",upgrade="never")'
       # - name: Render README
       #   run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
-      # - name: Render index
-      #   run: Rscript -e 'rmarkdown::render("index.Rmd")'
-      - name: Render intraday report
-        run: Rscript -e 'rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = paste0("index.html"))'
+      - name: Render index
+        run: Rscript -e 'rmarkdown::render("index.Rmd")'
+      # - name: Render intraday report
+      #   run: Rscript -e 'rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = paste0("index.html"))'
       - name: GitHub Push
         uses: actions-js/push@master
         with:
