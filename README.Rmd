@@ -1,7 +1,5 @@
-# intraday
+# Daily Turkish Intraday Market Report (BETA)
 
-Daily Turkish Intraday Market Report (in progress)
+[![Daily Routine](https://github.com/berkorbay/intraday/actions/workflows/daily.yml/badge.svg)](https://github.com/berkorbay/intraday/actions/workflows/daily.yml)
 
-```{r}
-Sys.time()
-```
+https://berkorbay.github.io/intraday/
