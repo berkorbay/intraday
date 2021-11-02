@@ -1,7 +1,7 @@
 name: Daily Routine
 on:
   schedule:
-    - cron: 0 10 * * *
+    - cron: 15 10 * * *
   # push:
   #   branches:
   #     - "prod"
@@ -14,7 +14,7 @@ jobs:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
           fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
           ref: prod # https://stackoverflow.com/a/58800550/3608936
-      - run: echo I've checked out the `prod` branch
+      - run: echo I've checked out the prod branch
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
