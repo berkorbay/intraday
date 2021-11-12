@@ -51,7 +51,6 @@ jobs:
       - name: Install deps
         uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          cache-version: 1
           extra-packages: |
             devtools
             here
