@@ -1,10 +1,10 @@
 name: Daily Routine
 on:
-  schedule:
-    - cron: 0 5 * * *
-  # push:
-  #   branches:
-  #     - "prod"
+  # schedule:
+  #   - cron: 0 5 * * *
+  push:
+    branches:
+      - "prod"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -51,6 +51,7 @@ jobs:
       - name: Install deps
         uses: r-lib/actions/setup-r-dependencies@v1
         with:
+          # cache-version: 1
           extra-packages: |
             devtools
             here
