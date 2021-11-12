@@ -1,10 +1,10 @@
 name: Daily Routine
 on:
-  # schedule:
-  #   - cron: 0 5 * * *
-  push:
-    branches:
-      - "prod"
+  schedule:
+    - cron: 0 5 * * *
+  # push:
+  #   branches:
+  #     - "prod"
 jobs:
   build:
     runs-on: ubuntu-latest
