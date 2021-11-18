@@ -1,6 +1,6 @@
 # Daily Turkish Intraday Market Report (BETA)
 
-[![Daily Routine](https://github.com/berkorbay/intraday/actions/workflows/daily.yml/badge.svg)](https://github.com/berkorbay/intraday/actions/workflows/daily.yml)
+[![Daily Routine Docker](https://github.com/berkorbay/intraday/actions/workflows/daily_docker.yml/badge.svg?branch=main)](https://github.com/berkorbay/intraday/actions/workflows/daily_docker.yml)
 
 This is still a work in progress...
 
