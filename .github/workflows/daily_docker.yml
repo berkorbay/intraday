@@ -1,4 +1,4 @@
-name: Daily Routine
+name: Daily Routine Docker
 on:
   # schedule:
   #   - cron: 0 5 * * *
