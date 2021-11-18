@@ -67,7 +67,8 @@ jobs:
       # - name: Render intraday report
       #   run: Rscript -e 'rmarkdown::render(system.file("rmd/intraday_report.Rmd",package="intraday"),output_file = paste0("index.html"))'
       - name: Run telegram
-        run: python telegram_message.py --bottoken ${{ secrets.TG_TOKEN }} --chatid ${{ secrets.TG_CHATID }}
+        run: |
+          python telegram_message.py --bottoken ${{ secrets.TG_TOKEN }} --chatid ${{ secrets.TG_CHATID }}
       - name: GitHub Push
         uses: actions-js/push@master
         with:
