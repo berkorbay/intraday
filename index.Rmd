@@ -40,6 +40,10 @@ tx_df <- preprocess_transactions_df(transactions_df_raw)
 
 the_date <- as_date(names(table(as_date(price_df_raw$date)))[1])
 
+promoted_startups <- readxl::read_excel(system.file("xlsx/promoted_startups.xlsx",package="intraday"))
+startup_index <- as.integer(the_date - as_date("2021-11-01")) %% nrow(promoted_startups)  + 1
+
+st_list <-  promoted_startups %>% slice(startup_index) %>% as.list()
 ```
 
 ---
@@ -68,12 +72,12 @@ reactable(header_df,striped = TRUE)
 ```
 
 <div class="alert alert-warning role="alert" style="width:99%; height:100%;"> 
-<h2> Today's startup! </h2>
+<h2> Today's startup/organization! </h2>
 <p>Project Intraday has an objective to promote a startup or organization each day. You can <a href="https://www.linkedin.com/in/berkorbay/" target="_blank">contact me on Linkedin</a> if you want to be featured.</p>
 
-<p> <strong>Açık Enerji</strong> (Open Energy) is a Github organization of repositories and external links about data analysis in energy sector. Repositories and links also contain code and data as well as the analyses.</p>
+<p> <strong>`r st_list$name`</strong> `r st_list$description`</p>
 
-<p><a href="https://github.com/acikenerji" target="_blank">Click here to learn more</a></p>
+<p><a href="`r paste0(gsub("/+$","",st_list$link),"/?ref=idreport")`" target="_blank">Click here to learn more</a></p>
 </div>
 
 ## Daily Chart and Data

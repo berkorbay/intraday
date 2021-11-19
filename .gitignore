@@ -6,3 +6,4 @@ intraday.py
 IGNORE_cmdhelpers.txt
 **/.DS_Store
 __pycache__/
+inst/xlsx/~$promoted_startups.xlsx

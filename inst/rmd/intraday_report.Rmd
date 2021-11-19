@@ -1,8 +1,17 @@
 ---
-output: 
+output:
   html_document:
     toc: true
+    includes:
+      in_header: GA_script.html
 ---
+
+<!-- Google Tag Manager (noscript) -->
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NRTD454"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- End Google Tag Manager (noscript) -->
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,warning=FALSE,message=FALSE)
@@ -15,12 +24,11 @@ library(reactable)
 library(echarts4r)
 ```
 
-
 ```{r get_raw_price_data}
 price_df_raw <- readr::read_csv(system.file("market-data/price_data.csv",package="intraday"),locale=readr::locale(tz="Turkey"))
 colnames(price_df_raw)[1] <- "X1" ## TEMP fix
 
-price_df <- price_df_raw %>% select(-X1) %>% mutate(date=as_datetime(date,tz="Turkey")) %>% relocate(aof,.after=mcp) 
+price_df <- price_df_raw %>% select(-X1) %>% mutate(date=as_datetime(date,tz="Turkey")) %>% relocate(aof,.after=mcp)
 
 summary_df_raw <- readr::read_csv(system.file("market-data/intraday_summary.csv",package="intraday"),locale=readr::locale(tz="Turkey"))
 colnames(summary_df_raw)[1] <- "X1" ## TEMP fix
@@ -32,12 +40,21 @@ tx_df <- preprocess_transactions_df(transactions_df_raw)
 
 the_date <- as_date(names(table(as_date(price_df_raw$date)))[1])
 
-```
+promoted_startups <- readxl::read_excel(system.file("xlsx/promoted_startups.xlsx",package="intraday"))
+startup_index <- as.integer(the_date - as_date("2021-11-01")) %% nrow(promoted_startups)  + 1
 
+st_list <-  promoted_startups %>% slice(startup_index) %>% as.list()
+```
 
 ---
 title: "EPIAS Intraday Market Report of `r format(the_date,format="%b %d, %Y")` (BETA)"
 ---
+
+
+
+<div class="alert alert-success role="alert" style="width:99%; height:100%;"> 
+<a href="https://t.me/seffaflik" target="_blank">Join the Telegram channel for daily updates!</a>
+</div>
 
 <!-- <h1>Report of `r format(the_date,format="%b %d, %Y")`</h1> -->
 
@@ -46,22 +63,21 @@ title: "EPIAS Intraday Market Report of `r format(the_date,format="%b %d, %Y")` 
 ```{r}
 valuebox_vec <-  price_df %>% mutate(pd_aof_mcp = aof-mcp,pd_aof_smp = aof-smp) %>% summarise(md_mcp=round(mean(pd_aof_mcp,na.rm=TRUE),2),md_smp=round(mean(pd_aof_smp,na.rm=TRUE),2)) %>% unlist()
 
-header_df <- 
+header_df <-
 tibble(name= "Total Intraday Market Volume (TIMV)" ,value=summary_df_raw %>% summarise(timv=format(round(sum(tradingVolume,na.rm=TRUE)),big.mark=",",small.mark=".")) %>% unlist() %>% paste0("TRY ",.)) %>%
   add_row(name="Mean Deviation from MCP",value=paste0("TRY ",valuebox_vec["md_mcp"])) %>%
-  add_row(name="Mean Deviation from SMP",value=paste0("TRY ",valuebox_vec["md_smp"])) 
+  add_row(name="Mean Deviation from SMP",value=paste0("TRY ",valuebox_vec["md_smp"]))
 
 reactable(header_df,striped = TRUE)
 ```
 
-
 <div class="alert alert-warning role="alert" style="width:99%; height:100%;"> 
-<h2> Today's startup! </h2>
+<h2> Today's startup/organization! </h2>
 <p>Project Intraday has an objective to promote a startup or organization each day. You can <a href="https://www.linkedin.com/in/berkorbay/" target="_blank">contact me on Linkedin</a> if you want to be featured.</p>
 
-<p> <strong>Açık Enerji</strong> (Open Energy) is a Github organization of repositories and external links about data analysis in energy sector. Repositories and links also contain code and data as well as the analyses.</p>
+<p> <strong>`r st_list$name`</strong> `r st_list$description`</p>
 
-<p><a href="https://github.com/acikenerji" target="_blank">Click here to learn more</a></p>
+<p><a href="`r paste0(gsub("/+$","",st_list$link),"/?ref=idreport")`" target="_blank">Click here to learn more</a></p>
 </div>
 
 ## Daily Chart and Data
@@ -86,7 +102,6 @@ tx_df %>% group_by(contract) %>% summarise(total_mwh = sum(quantity_in_mwh*pmax(
 
 ```
 
-
 # About the report
 
 - This is a free report and authors do not admit any responsibility about the report or the data.
@@ -94,6 +109,3 @@ tx_df %>% group_by(contract) %>% summarise(total_mwh = sum(quantity_in_mwh*pmax(
 - Data is taken from [EPIAS Seffaflik Platformu](https://seffaflik.epias.com.tr/), data provider of the Turkish Energy Exchange.
 - Almost all code is openly shared on its [Github repository](https://github.com/berkorbay/intraday). You may use the code in line with the license (MIT license).
 - For improvement, analysis and data requests [contact me on Linkedin](https://www.linkedin.com/in/berkorbay/). For raw data csv files [click here](https://github.com/berkorbay/intraday/tree/prod/inst/market-data).
-
-
-
