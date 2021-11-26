@@ -28,3 +28,10 @@ preprocess_transactions_df <- function(raw_df){
 
   return(return_df)
 }
+
+#'@export
+format_num_tr <- function(input_val){
+  
+  return(format(input_val,big.mark=",",small.mark="."))
+  
+}

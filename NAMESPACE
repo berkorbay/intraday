@@ -2,6 +2,7 @@
 
 export(extract_block_hours)
 export(extract_contract_hour)
+export(format_num_tr)
 export(preprocess_transactions_df)
 export(run_app)
 import(shiny)
